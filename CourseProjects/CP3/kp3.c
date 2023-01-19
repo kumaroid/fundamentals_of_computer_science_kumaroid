@@ -1,3 +1,4 @@
+///kp3
 #include <stdio.h>
 #include <math.h>
 #include <assert.h>
@@ -20,11 +21,11 @@ int main(){
     int n, k; //Кол-во частей отрезка, коэффициент точности
     long double a, b; //Начало и конец отрезка
     printf("Enter n k a b : ");
-    scanf("%i%i%lf%lf", &n, &k, &a, &b);
+    scanf("%i%i%Lf%Lf", &n, &k, &a, &b);
     printf("x\t\tTaylor's Row\tFunction\titerations\n");
     long double x = a;
     for(int j = 0; j < 51; j++){
-    printf("%lf\t%lf\t%lf\t%i\n", x, sumT(k, x), Function(x), i);
+    printf("%Lf\t%Lf\t%Lf\t%i\n", x, sumT(k, x), Function(x), i);
     x += (b - a) / n;
 }
 
