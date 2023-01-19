@@ -1,3 +1,4 @@
+///kp4-11
 #include <stdio.h>
 #include <math.h>
 
@@ -19,14 +20,14 @@ ld dx1(ld x){
 }
 
 ld dx2(ld x){
-    return ((1 / x) - 1);
+    return ((1 / x) - 1.l);
 }
 
 ld sign(ld x){
     return x > epsilon ? 1.l : x < -epsilon ? -1.l : 0.l;
 }
 
-ld dihotomy(pFunc f, ld a, ld b){
+ld dihotomy1(pFunc f, ld a, ld b){
     ld x = (a + b) / 2;
     while (fabsl(a-b) > epsilon * k){
         x = (a + b) / 2;
@@ -52,11 +53,22 @@ ld newton1(pFunc f, ld a, ld b){
     return x;
 }
 
+ld dihotomy2(pFunc f, ld a, ld b){
+    ld x = (a + b) / 2;
+    while (fabsl(a-b) > epsilon * k){
+        a = ceil(a * 1e+10) / 1e+10;
+        b = ceil(b * 1e+10) / 1e+10;
+        x = (a + b) / 2;
+        if(f(a) * f(x) > 0.l) a = x;
+        else b = x;
+    }
+    return x;
+}
+
 ld iteration2(pFunc f, ld a, ld b){
     ld x = (a + b) / 2;
     while(fabsl(f(x)) > epsilon * k){
-        x = x - f(x)*sign(dx2(x));
-        printf("%Lf\n", x);
+        x = (x - f(x)*sign(dx2(x)));
     }
     return x;
 }
@@ -76,14 +88,15 @@ ld func1(ld x){
 
 ld a2 = 2.l, b2 = 3.l;
 ld func2(ld x){
-    return logl(x) - x + 1.8l;
+    long double p = logl(x) - x + 1.8l;
+    p = ceil(p * 1e+10) / 1e+10;
+    return p;
 }
-
 
 
 int main(){
     epsilon = machineeps();
-    printf("dichotomy method result 11 variant: %Lf\n", dihotomy(func1, a1, b1));
+    printf("dichotomy method result 11 variant: %Lf\n", dihotomy1(func1, a1, b1));
     printf("iteration method result 11 variant: %Lf\n", iteration1(func1, a1, b1));
     printf("newton method result 11 variant: %Lf\n", newton1(func1, a1, b1));
     printf("\n");
