@@ -1,50 +1,42 @@
-///kp3
-#include <stdio.h>
 #include <math.h>
-#include <assert.h>
-#include <float.h>
-long double Function(long double Fx); //Расчет при помощи встроенных функций
-long long Factorial(int Fn); //Расчет факториала
-long double sumT(int Sn, long double Sx); //Расчет по формуле Тейлора
-long double eps = 1; //Переменная машинного нуля
-int i; //Переменная-счетчик итераций
-void test(){
-    assert(Factorial(2)==2);
-    assert(Function(0)==0);
-    assert(sumT(1, 0)==0);
-}
+#include <stdbool.h>
+#include <stdio.h>
+#include <limits.h>
+
+#define DBL_PI_2 1.5707963267948966192
+#define MAX_ITER 20
+
+typedef unsigned uint;
+typedef float flt;
+typedef double dbl;
+typedef long double ldbl;
+unsigned long int n = 1;
+const double eps = 10e-16;
+
+dbl sinSqrTaylor(dbl x);
+
+void tabulation(dbl a, dbl b, uint n);
+
 int main(){
-    while (LDBL_EPSILON != eps){
-        eps /= 2;
-    } //Вычисление машинного нуля
-    test();
-    int n, k; //Кол-во частей отрезка, коэффициент точности
-    long double a, b; //Начало и конец отрезка
-    printf("Enter n k a b : ");
-    scanf("%i%i%Lf%Lf", &n, &k, &a, &b);
-    printf("x\t\tTaylor's Row\tFunction\titerations\n");
-    long double x = a;
-    for(int j = 0; j < 51; j++){
-    printf("%Lf\t%Lf\t%Lf\t%i\n", x, sumT(k, x), Function(x), i);
-    x += (b - a) / n;
+    int n;
+    scanf("%d", &n);
+    tabulation(0.0, DBL_PI_2, n);
+    return 0;
 }
 
-}
-long double Function(long double Fx){
-    return sin(Fx) * sin(Fx);
+void tabulation(const dbl a, const dbl b, const uint n){
+    const dbl delta = (b - a) / n;
+    for (uint i = 0; i <= n; ++i){
+        const dbl x = a + i * delta;
+        printf("%.6lf %.15lf %.15lf\n", x, sin(x) * sin(x), sinSqrTaylor(x));
     }
-long long Factorial(int Fn){
-    if (Fn == 0){
-        return 1;
-    }
-    return Fn*Factorial(Fn-1);
 }
-long double sumT(int Sk, long double Sx){
 
-    long double sum = 0;
-    long double temp;
-    for (i = 1; 1; i++){
-    temp = (pow(-1, i - 1) * pow(2, 2 * i - 1) * pow(Sx, 2 * i)) / Factorial(2 * i); if (pow(-1, i - 1)*temp <= eps) { return sum; } sum += temp;
+dbl sinSqrTaylor(const dbl x) {
+    dbl result = 0.0, member = -0.5;
+    for (uint n = 1; n <= MAX_ITER; ++n) {
+        member *= -4.0 * x * x / (2.0 * n - 1.0) / (2.0 * n);
+        result += member;
     }
-    return sum;
+    return result;
 }
