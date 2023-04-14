@@ -105,6 +105,148 @@
 ## 8. Распечатка протокола
 
 ```
+user@kumar4ik:~$ dir
+key    renames  test1   VS      Загрузки   Общедоступные
+labs   sd  testmai  Видео      Изображения  Рабочий\ стол
+notmy  snap  tree   Документы  Музыка   Шаблоны
+user@kumar4ik:~$ find.-mtime -7
+find.-mtime: команда не найдена
+user@kumar4ik:~$ find .-mtime -7
+find: неизвестный предикат «-7»
+user@kumar4ik:~$ find .-mtime 7
+find: ‘.-mtime’: Нет такого файла или каталога
+find: ‘7’: Нет такого файла или каталога
+user@kumar4ik:~$ find .-name ".txt"
+find: ‘.-name’: Нет такого файла или каталога
+find: ‘.txt’: Нет такого файла или каталога
+user@kumar4ik:~$ find docs
+find: ‘docs’: Нет такого файла или каталога
+user@kumar4ik:~$ find VS
+VS
+VS/.vscode
+VS/.vscode/tasks.json
+VS/.vscode/launch.json
+VS/pro
+VS/Lab23
+VS/Lab23/include
+VS/Lab23/include/Tree.hpp
+VS/Lab23/include/Node.hpp
+VS/Lab23/include/main.cpp
+VS/Lab23/include/main
+VS/lab23my.cpp
+VS/lab23my.cpp/Tree.hpp
+VS/lab23my.cpp/Node.hpp
+VS/lab23my.cpp/main.cpp
+VS/lab23my.cpp/main
+user@kumar4ik:~$ dir
+key    renames  test1   VS      Загрузки   Общедоступные
+labs   sd  testmai  Видео      Изображения  Рабочий\ стол
+notmy  snap  tree   Документы  Музыка   Шаблоны
+user@kumar4ik:~$ cd test1
+user@kumar4ik:~/test1$ touch txt.txt
+user@kumar4ik:~/test1$ find -name ".txt"
+user@kumar4ik:~/test1$ sed -i txt.txt
+sed: невозможно найти метку для перехода к `xt.txt'
+user@kumar4ik:~/test1$ find . -type d
+.
+./.git
+./.git/objects
+./.git/objects/pack
+./.git/objects/e6
+./.git/objects/info
+./.git/objects/09
+./.git/hooks
+./.git/refs
+./.git/refs/heads
+./.git/refs/tags
+./.git/branches
+./.git/info
+user@kumar4ik:~/test1$ find . -mtime -7
+.
+./txt.txt
+user@kumar4ik:~/test1$ dir
+foo.txt  txt.txt
+user@kumar4ik:~/test1$ man
+Какая справочная страница вам нужна?
+Например, попробуйте ввести «man man».
+user@kumar4ik:~/test1$ help
+GNU bash, версия 5.1.16(1)-release (x86_64-pc-linux-gnu)
+Показанные ниже команды определены внутри командного процессора.  Чтобы вывести полный список, введите «help».
+Чтобы вывести справку по функции «name», введите «help name».
+Чтобы вывести справку по командному процессору, введите «info bash».
+Чтобы вывести справку по командам, которые отсутствуют в этом списке, введите «man -k» или «info».
+
+Звёздочка (*) рядом с названием команды означает, что эта команда отключена.
+задание [&]                             history [-c] [-d смещение] [n] или h>
+ (( выражение ))                         if КОМАНДЫ; then КОМАНДЫ; [ elif КОМ>
+ . файл [аргументы]                      jobs [-lnprs] [задание ...] или jobs>
+ :                                       kill [-s назв_сигнала | -n номер_сиг>
+ [ аргумент... ]                         let аргумент [аргумент ...]
+ [[ выражение ]]                         local [параметр] имя[=значение] ...
+ alias [-p] [имя[=значение] ... ]        logout [n]
+ bg [задание ...]                        mapfile [-d разделитель] [-n число] >
+ bind [-lpvsPSVX] [-m раскладка] [-f ф>  popd [-n] [+N | -N]
+ break [n]                               printf [-v переменная] формат [аргум>
+ builtin [встр_команда [аргумент ...]>   pushd [-n] [+N | -N | каталог]
+ caller [выражение]                      pwd [-LP]
+ case СЛОВО in [ШАБЛОН [| ШАБЛОН]...) >  read [-ers] [-a массив] [-d разделит>
+ cd [-L|[-P [-e]] [-@]] [каталог]        readarray [-d delim] [-n count] [-O >
+ command [-pVv] команда [аргумент ...>   readonly [-aAf] [имя[=значение] ...]>
+ compgen [-abcdefgjksuv] [-o option] [>  return [n]
+ complete [-abcdefgjksuv] [-pr] [-DEI]>  select ИМЯ [in СЛОВА ... ;] do КОМАН>
+ compopt [-o|+o option] [-DEI] [name .>  set [-abefhkmnptuvxBCHP] [-o парамет>
+ continue [n]                            shift [n]
+ coproc [ИМЯ] команда [перенаправления>  shopt [-pqsu] [-o] [параметр ...]
+ declare [-aAfFgiIlnrtux] [-p] [name[=>  source файл [аргументы]
+ dirs [-clpv] [+N] [-N]                  suspend [-f]
+ disown [-h] [-ar] [задание ... | pid >  test [выражение]
+ echo [-neE] [аргумент ...]              time [-p] конвейер
+ enable [-a] [-dnps] [-f файл] [имя ..>  times
+ eval [аргумент ...]                     trap [-lp] [[аргумент] сигнал ...]
+ exec [-cl] [-a name] [command [argume>  true
+ exit [n]                                type [-afptP] имя [имя ...]
+ export [-fn] [имя[=значение ...] или >  typeset [-aAfFgiIlnrtux] [-p] name[=>
+ false                                   ulimit [-SHabcdefiklmnpqrstuvxPT] [о>
+ fc [-e редактор] [-lnr] [первая] [пос>  umask [-p] [-S] [режим]
+ fg [задание]                            unalias [-a] имя [имя ...]
+ for ИМЯ [in СЛОВА... ;] do КОМАНДЫ; d>  unset [-f] [-v] [-n] [имя ...]
+ for (( выраж1; выраж2; выраж3 )); do >  until КОМАНДЫ; do КОМАНДЫ; done
+ function ИМЯ { КОМАНДЫ ; } или ИМЯ ()>  переменные — имена и значения некото>
+ getopts optstring name [arg ...]        wait [-fn] [-p var] [id ...]
+ hash [-lr] [-p путь] [-dt] [имя ...]    while КОМАНДЫ; do КОМАНДЫ; done
+ help [-dms] [шаблон ...]                { КОМАНДЫ ; }
+user@kumar4ik:~/test1$ man echo
+user@kumar4ik:~/test1$ cat txt.txt
+user@kumar4ik:~/test1$ maaaaau
+maaaaau: команда не найдена
+user@kumar4ik:~/test1$ cat >>  txt.txt << EOF
+> text
+> msams
+> wdmwd
+> ZOV
+> RAswswdwrfgerg
+> hello
+> EOF
+user@kumar4ik:~/test1$ sed -i 's/hello/hi/g' txt.txt
+user@kumar4ik:~/test1$ cat txt.txt
+text
+msams
+wdmwd
+ZOV
+RAswswdwrfgerg
+hi
+user@kumar4ik:~/test1$ sed -i 's/\t/g' txt.txt
+sed: -e выражение #1, символ 6: незавершенная команда `s'
+user@kumar4ik:~/test1$ cut -c 1-3 txt.txt
+tex
+msa
+wdm
+ZOV
+RAs
+hi
+user@kumar4ik:~/test1$ grep '^Z' txt.txt
+ZOV
+user@kumar4ik:~/test1$ clear
 ```
 
 
