@@ -235,8 +235,6 @@ wdmwd
 ZOV
 RAswswdwrfgerg
 hi
-user@kumar4ik:~/test1$ sed -i 's/\t/g' txt.txt
-sed: -e выражение #1, символ 6: незавершенная команда `s'
 user@kumar4ik:~/test1$ cut -c 1-3 txt.txt
 tex
 msa
