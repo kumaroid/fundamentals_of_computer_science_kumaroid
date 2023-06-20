@@ -255,6 +255,7 @@ user@kumar4ik:~/test1$ clear
 
 ## 10. Замечания автора по существу работы
 
+<a href = 'https://codeforces.com/contest/1821/submission/202878112'>def(Zaschita)</a>
 
 ## 11. Выводы
 
