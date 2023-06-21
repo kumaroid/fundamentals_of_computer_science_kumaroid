@@ -271,45 +271,18 @@ Deque *dequeSort(Deque *deque) {
 ## 8. Распечатка протокола
 
 ```
-pepelulka@pepelulka:~/Desktop/labs/repo/Lab25-26-stack$ build/bin/main
-Starting session
-You entered interactive mode. Here's the list of commands:
-    print - prints stack
-    size - prints size of stack
-    clear - clears stack
-    top - prints top element
-    pop - pops top element
-    push - pushes element on the top
-    sort - sorts stack
----------------
-    exit - exit program.
-> push 3
-> push 5
-> push -1
-> push 20
-> print
-3 5 -1 20
-> sort
-> print
--1 3 5 20
-> push 11
-> push 12
-> push -9
-> print
--1 3 5 20 11 12 -9
-> sort
-> print
--9 -1 3 5 11 12 20
-> size
-7
-> top
-20
-> pop
-20
-> print
--9 -1 3 5 11 12
-> exit
-Goodbye!
+aleksandr@aanedosekin:~/andrew$ ls
+deque.c  deque.h  main.c  Makefile
+aleksandr@aanedosekin:~/andrew$ make
+gcc -Wall -Wextra -Wpedantic -c main.c
+gcc -Wall -Wextra -Wpedantic -c deque.c
+gcc -Wall -Wextra -Wpedantic main.o deque.o -o deque_merge_sort
+aleksandr@aanedosekin:~/andrew$ ls
+deque.c  deque.h  deque_merge_sort  deque.o  main.c  main.o  Makefile
+aleksandr@aanedosekin:~/andrew$ ./deque_merge_sort 
+7 3 12 -11 34 5 
+-11 3 5 7 12 34 
+aleksandr@aanedosekin:~/andrew$
 ```
 
 ## 9. Дневник отладки должен содержать дату и время сеансов отладки и основные события (ошибки в сценарии и программе, нестандартные ситуации) и краткие комментарии к ним. В дневнике отладки приводятся сведения об использовании других ЭВМ, существенном участии преподавателя и других лиц в написании и отладке программы.
