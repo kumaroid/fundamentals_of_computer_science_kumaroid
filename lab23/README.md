@@ -363,7 +363,99 @@ void check_monotonicity_of_decreaset(Tree tree);
 
 ## 8. Распечатка протокола
 ```
+aleksandr@aanedosekin:~/andrew/lab23$ valgrind ./a.out
+==15349== Memcheck, a memory error detector
+==15349== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15349== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==15349== Command: ./a.out
+==15349== 
 
+Print 'help' for more information
+
+help
+
+
+Command 'insert' - if the tree doesnt exist, makes a tree. Command 'ins' - if tree was made, adds vertices in the tree
+
+Command 'delete num' deletes all the vertices and all her children
+
+Command 'print' prints the vertices of the tree
+
+Command 'run' checks monotonicity of decreseaset of the tree
+
+Command 'quit' stops the program
+
+Command 'destroy' deletes the tree completely
+
+insert 8
+Add the value of the tree root:
+ins 8 3
+print
+
+
+8
+  3
+
+
+ins 3 9
+print
+
+
+8
+  3
+    9
+
+
+ins 8 2
+ins 2 4
+ins 4 0
+print
+
+
+8
+  3
+    9
+  2
+    4
+      0
+
+
+ins 8 -20
+print
+
+
+8
+  3
+    9
+  2
+    4
+      0
+  -20
+
+
+delete 3
+print
+
+
+8
+  2
+    4
+      0
+  -20
+
+
+run
+Tree doesnt decrease
+quit
+==15349== 
+==15349== HEAP SUMMARY:
+==15349==     in use at exit: 0 bytes in 0 blocks
+==15349==   total heap usage: 9 allocs, 9 frees, 2,216 bytes allocated
+==15349== 
+==15349== All heap blocks were freed -- no leaks are possible
+==15349== 
+==15349== For lists of detected and suppressed errors, rerun with: -s
+==15349== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
 
 ## 9. Дневник отладки должен содержать дату и время сеансов отладки и основные события (ошибки в сценарии и программе, нестандартные ситуации) и краткие комментарии к ним. В дневнике отладки приводятся сведения об использовании других ЭВМ, существенном участии преподавателя и других лиц в написании и отладке программы.
