@@ -58,7 +58,7 @@ CC=gcc
 LD=gcc
 CCFLAGS=-Wall -Werror -Wextra -Wfatal-errors -Wpedantic -pedantic-errors
 LDFLAGS=
-SOURCES=$(addprefix src/,main.c stack.c stack_algo.c textmenu.c)
+SOURCES=$(addprefix src/,main.c deque.c deque.h)
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=src/main
 
@@ -74,6 +74,7 @@ $(EXECUTABLE): $(OBJECTS)
 
 clean:
 	rm -r build
+
 ```
 
 main.c
