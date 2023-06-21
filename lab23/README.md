@@ -46,239 +46,316 @@
 
 ## 7. Сценарий выполнения работы [план работы, первоначальный текст программы в черновике (можно на отдельном листе) и тесты либо соображения по тестированию].
 
+Makefile:
+```src:Makefile
+CC ?= gcc 
+CFLAGS ?= -g -Werror -pedantic
+main: main.o tree.o
+	${CC} -o main main.o tree.o
+
+main.o: main.c 
+	${CC} ${CFLAGS} -c main.c
+
+functions.o: tree.c tree.o
+	${CC} ${CFLAGS} -c tree.c
+
+clean: 
+	rm -rf *.o main
+
+```
+
 main.c:
 ```src:main.c
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+#include "tree.h"
 
-typedef struct Tst {
-    int key;
-    struct Tst *son;
-    struct Tst *brother;
-} Node;
+int main(void)
+{
+    char s[8];
 
-Node* create_tree(int val) {
-    Node* tree = (Node*)malloc(sizeof(Node));
-    if (tree == NULL) {
-        exit(1);
-    }
-    tree->key = val;
-    tree->son = NULL;
-    tree->brother = NULL;
-    return tree;
-}
+    Tree tree = NULL; // Указатель на корень дерева
+    int root = 0, ver = 0, parent = 0; // Переменные для новых узлов дерева
 
-void delete_tree(Node *tree) {
-    if (tree == NULL){
-        return;
-    }
-    delete_tree(tree->son);
-    delete_tree(tree->brother);
-    free(tree);
-}
-
-Node* find_node(Node* root, int key) {
-    if (root == NULL) {
-        return NULL;
-    }
-    if (root->key == key) {
-        return root;
-    }
-    Node* node = find_node(root->son, key);
-    if (node != NULL) {
-        return node;
-    }
-    return find_node(root->brother, key);
-}
-
-void tree_print(Node* root, int depth) {
-    if (root == NULL) {
-        return;
-    }
-    if (root->key != -1) { 
-        printf("%*s", depth * 4, "");
-        printf("%d\n", root->key);
-    }
-    tree_print(root->son, depth + 1);
-    tree_print(root->brother, depth); 
-}
-
-Node* delete_subtree(Node* root) {
-    if (root == NULL) {
-        printf("Tree is empty\n");
-        return NULL;
-    }
-
-    char c;
-    Node* curr = root;
-    Node* prev = NULL;
-    Node* new_root = NULL;
-
-    while ((c = getchar()) != '\n') {
-        if (c == ' ') {
-            continue;
-        }
-        if (c == 'r') {
-            prev = NULL;
-            curr = root;
-        } else if (c == 's') {
-            if (curr->son == NULL) {
-                printf("Node has no son\n");
-                return root;
+    printf("\nPrint 'help' for more information\n\n"); // Выводим подсказку при запуске программы
+    while (1) {
+        scanf("%7s", s); // Ввод символа с клавиатуры
+        if (!strcmp(s, "insert") || !strcmp(s, "ins")) { // Задаем корень дерева
+            if(!tree) {
+                printf("Add the value of the tree root:\n");
+                scanf("%d", &root);
+                tree = tree_create(root);
             }
-            prev = curr;
-            curr = curr->son;
-        } else if (c == 'b') {
-            if (prev == NULL || prev->brother == NULL) {
-                printf("Node has no brother\n");
-                return root;
+            while (scanf("%d%d", &parent, &ver)) {
+                tree_add_node(tree, parent, ver);
             }
-            curr = prev->brother;
-            prev = NULL;
-        }
-    }
-    if (curr == root) {
-        new_root = root->brother ? root->brother : root->son;
-        free(root);
-        root = NULL;
-        return new_root;
-    }
-    if (prev == NULL) {
-        new_root = curr->brother ? curr->brother : curr->son;
-        free(curr);
-        curr = NULL;
-        return root;
-    }
-    if (prev->son == curr) {
-        prev->son = curr->brother;
-    } else {
-        Node* temp = prev->son;
-        while (temp->brother != curr) {
-            temp = temp->brother;
-        }
-        temp->brother = curr->brother;
-    }
-    curr->son = NULL;
-    curr->brother = NULL;
-    free(curr); 
-    return root;
-}
-
-
-Node* add_node(Node* tree) {
-    Node* t = tree;
-    int value;
-    char c;
-    while ((c = getchar()) != 'r') {
-        continue;
-    }
-    if (tree == NULL) {
-        if (scanf("%d", &value) != 1) {
-            printf("Input error\n");
-            free(create_tree(value));
-            return tree;
-        }
-        tree = create_tree(value);
-        return tree;
-    }
-    while ((c = getchar()) != ' ') {
-        if (c == 's') {
-            t = t->son;
-        }
-        if (c == 'b') {
-            t = t->brother;
-        }
-    }
-    if (scanf("%d", &value) != 1) {
-        printf("Input error\n");
-        Node* ntree = create_tree(value);
-        free(ntree);
-        return tree;
-    }
-    Node* ntree = create_tree(value);
-    if (t->son != NULL) {
-        t = t->son;
-        while (t->brother != NULL) {
-            t = t->brother;
-        }
-        t->brother = ntree;
-    } else {
-        t->son = ntree;
-    }
-    return tree;
-}
-
-int is_width_monotonic(Node* root) {
-    if (root == NULL) {
-        return 1;
-    }
-
-    int prev_width = 0; 
-    int curr_width = 0;
-    int increasing = 0; 
-    Node* level_start = root; 
-    Node* curr_node = NULL; 
-    Node* next_level_start = NULL;
-
-    while (level_start != NULL) {
-        curr_node = level_start;
-        curr_width = 0;
-        while (curr_node != NULL) {
-            curr_width++;
-            if (curr_node->son != NULL) {
-                if (next_level_start == NULL) {
-                    next_level_start = curr_node->son;
-                } else {
-                    Node* temp = next_level_start;
-                    while (temp->brother != NULL) {
-                        temp = temp->brother;
-                    }
-                    temp->brother = curr_node->son;
-                }
+        } else if (!strcmp(s, "delete")) { // Если команда delete
+            if(!tree) printf("Tree doesnt exist, use command 'help'\n"); //Если нет дерева, выводим подсказку
+            else {
+                scanf("%d", &ver);
+                tree_del_node(tree, ver); // Удаляем зачение
             }
-            curr_node = curr_node->brother;
-        }
-        if (prev_width > curr_width) {
-            increasing = 0;
+        } else if (!strcmp(s, "quit")) { // Если команда quit
+            if (tree) tree_destroy(tree); // Рушим дерево 
             break;
-        } else if (prev_width < curr_width) {
-            increasing = 1;
-        }
-        prev_width = curr_width;
-        level_start = next_level_start;
-        next_level_start = NULL;
-    }
-    return increasing;
-}
-
-int main() {
-    char c;
-    Node* root = NULL;
-    while ((c = getchar()) != EOF) {
-        if (c == 'a') {
-            root = add_node(root);
-        }
-        if (c == 'd') {
-            root = delete_subtree(root); 
-        }
-        if (c == 'p'){
-            tree_print(root, 0);
-        }
-        if (c == 't'){
-          if (is_width_monotonic(root)) {
-            printf("The tree has monotonically increasing width at each level.\n");
-          } else {
-            printf("The tree does not have monotonically increasing width at each level.\n");
-          }
-        }
-        if (c == 'q'){
-            break;
+        } else if (!strcmp(s, "run")) { // Если команда run, начинаем проверку на монотонность
+            if(!tree) printf("Tree doesnt exist, use command 'help'\n"); 
+            else {
+                check_monotonicity_of_decreaset(tree);
+            }
+        } else if (!strcmp(s, "print")) { // Если команда print, выводим дерево
+            if (!tree) printf("Tree doesnt exist, use command 'help'\n");
+            else {
+                printf("\n\n");
+                tree_print(tree);
+                printf("\n\n");
+            }
+        } else if (!strcmp(s, "destroy")) { // Удаляем дерево
+            if (!tree) printf("Tree doesnt exist, use command 'help'\n");
+            else {
+                tree_destroy(tree);
+                tree = NULL;
+            }
+        } else if (!strcmp(s, "help")) { // Помощник
+            printf("\n\nCommand 'insert' - if the tree doesnt exist, makes a tree. Command 'ins' - if tree was made, adds vertices in the tree\n\n");
+            printf("Command 'delete num' deletes all the vertices and all her children\n\n");
+            printf("Command 'print' prints the vertices of the tree\n\n");
+            printf("Command 'run' checks monotonicity of decreseaset of the tree\n\n");
+            printf("Command 'quit' stops the program\n\n");
+            printf("Command 'destroy' deletes the tree completely\n\n");
+        } else {
+            printf("\n\nThat command doesnt exist, try command 'help' \n\n");
         }
     }
-  delete_tree(root);
     return 0;
 }
 ```
+
+tree.c:
+```src:tree.c
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#include "tree.h"
+
+#define DEEP 0
+#define max(x,y) ((x) > (y) ? (x) : (y)) //Выбираем константу функции максимума путем тернарного оператора
+
+
+struct _tree { // Дерево
+    TreeItem value; // Значение узла дерева
+    Tree child; // Указатель на первого потомка узла
+    Tree sibling; // Указатель на правого брата
+}; //*Tree
+
+Tree tree_create(TreeItem value) // Создание нового узла дерева
+{
+    Tree tree = (Tree) malloc(sizeof(*tree)); // Задаем размер в памяти для дерева, которую задает пользователь 
+    if(!tree) { //Проверка на успешное выделение памяти
+        fprintf(stderr, "%s\n", "Error: no memory");
+        exit(1);
+    }
+    tree->value = value; // Устанавливаем значение поля value на структуру указателя tree
+    tree->child = NULL;
+    tree->sibling = NULL;
+    
+    return tree;
+}
+
+void tree_add_node(Tree tree, TreeItem parent, TreeItem value) // Добавление нового узла
+{
+    Tree parent_node = tree_find(tree, parent); // находим узел parent
+    if(parent_node) { // Если узел найден
+        if(!parent_node->child) { // Проверка на дочерний узел
+            parent_node->child = tree_create(value); // Создаем новый узел
+        } else {
+            parent_node = parent_node->child; //Если нет, то новый узел - дочерний
+            while(parent_node->sibling) { // Если новый узел имеет дочерние узлы, то находим последний и создаем соседа
+                parent_node = parent_node->sibling;
+            }
+            parent_node->sibling = tree_create(value);
+        }
+    } else {
+        printf("The specified parent vertex was not found\n"); // Если нет - выводим ошибку
+    }
+}
+
+Tree tree_find(Tree tree, TreeItem c) // Функция поиск узла с заданным значением в дереве
+{
+    if(!tree) { // Рекурсивный обход всех узлов дерева
+        return NULL;
+    }
+
+    if(tree->value == c) { // Нашел!
+        return tree;
+    }
+
+    Tree result = NULL; // Возвращаемся из функции
+    if(tree->child) {
+        result = tree_find(tree->child, c);
+        if(result) return result;
+    }
+
+    if(tree->sibling) { // Если соседний элемент есть
+        result = tree_find(tree->sibling, c);
+        if(result) return result;
+    }
+
+}
+
+
+void tree_print_node(Tree tree, int indent) // Вывод на экран терминала узлы
+{
+    for(int i = 0; i < indent; ++i) { // Уменьшаем кол-во отступов \t
+        printf("\t");
+    }
+    printf("%d\n", tree->value); // Значение узла
+    if(tree->child) {
+        tree_print_node(tree->child, indent + 1); // Если дочерний узел выводим его + отступ+1
+    }
+    if(tree->sibling) {
+        tree_print_node(tree->sibling, indent); // Если соседний то значение узла + отступ
+    }
+}
+
+void tree_print(Tree tree) // Рекурсивный вызов самой себя функции
+{
+    tree_print_node(tree, 0);
+}
+
+void tree_destroy(Tree tree)
+{
+
+    if(tree->child) {
+        tree_destroy(tree->child);
+    }
+    if(tree->sibling) {
+        tree_destroy(tree->sibling);
+    }
+    free(tree);
+    tree = NULL;
+}
+
+
+void tree_del_node(Tree tree, TreeItem value) // Рекурсивно удаляет все дочерние и соседние узлы
+{
+    if(tree->child) { // Проверка у текущего узла наличие дочернего 
+        if(tree->child->value == value) { // Если есть
+            Tree tmp = tree->child; // Временный вызов
+            tree->child = tree->child->sibling; // Если дочерний равен соседнему
+            if (tmp->child) { // Временный имеет дочерний
+                tree_destroy(tmp->child); // Подставляем
+            }
+            free(tmp); // Удаление tmp
+            tmp = NULL; // Удаление
+            return;
+        } else {
+            tree_del_node(tree->child, value); // Ничего
+        }
+    }
+
+
+    if(tree->sibling) { // Проверка на наличие соседнего
+        if(tree->sibling->value == value) { // Если есть
+            Tree tmp = tree->sibling; // Временный вызов соседнего
+            tree->sibling = tree->sibling->sibling; // Его соседние узлы
+            if(tmp->child) { // Если есть у него дочерние
+                tree_destroy(tmp->child); // Подставляем
+            }
+            free(tmp); // Удаление
+            tmp = NULL; // Удаление
+            return;
+        } else {
+            tree_del_node(tree->sibling, value); // Ничего
+        }
+    }
+}
+
+int max_level(Tree tree, int deep) // Поиск максимальной глубины дерева
+{
+    if(!tree) return deep - 1; // Поднимаемся выше по дереву
+    return max(max_level(tree->child, deep + 1), max_level(tree->sibling, deep)); // Вызов каждого дочернего и соседнего узла
+}
+
+void couting_nodes_on_the_lvls(Tree tree, int level, int *mat) // Счетчик уровней дерева
+{
+    mat[level] += 1; // При каждом вызове увеличивает на 1
+    if(tree->child) { // Если дочерний узел
+        couting_nodes_on_the_lvls(tree->child, level + 1, mat);
+    }
+    if(tree->sibling) { // Если соседний узел
+        couting_nodes_on_the_lvls(tree->sibling, level, mat);
+    }
+}
+
+void check_monotonicity_of_decreaset(Tree tree) // Проверка на монотонное уменьшение
+{
+    bool more_one_lvl = false; // Проверка на наличие более одного уровня в дереве
+    bool decreasing = true; // Уменьшение
+    if(tree->child == NULL) { // Дочерних в дереве нет - монотонности нет
+        printf("Tree consists only from root, thats not enough for definition the monotony\n");
+    } else {
+        if(tree->child->child) { // Если у дочерних есть дочерний
+            more_one_lvl = true; // Проверяем
+        }
+        for(Tree tmp = tree->child; tmp->sibling; tmp = tmp->sibling) { 
+            if(tmp->child != NULL) { // Если есть дочерний узел
+                more_one_lvl = true; 
+                break;
+            }
+        }
+        if(more_one_lvl) { // Если больше одного
+            int deep = max_level(tree, DEEP); // Выявление максимальной глубины дерева
+            int level = 0; // Подсчет уровней
+            int mat[deep]; // Создание массива на подсчет узлов на каждом уровне
+            for(int i = 0; i <= deep; ++i) { 
+                mat[i] = 0; // Заполнение подсчета
+            }
+            couting_nodes_on_the_lvls(tree, level, mat); // Заполняем массив счетчика
+            for(int i = 1; i < deep; ++i) { // Проверка монотонности
+                if(mat[i] <= mat[i + 1]) { // Если следующий больше предыдущего узла
+                    printf("Tree doesnt decrease\n"); // "Не монотонно"
+                    decreasing = false;
+                    break;
+                }
+            }
+            if(decreasing) printf("Tree decreases\n"); // Если дерево монотонно - true output
+        } else printf("Tree have only 1 level, thats not enough for definition the monotony\n"); // Уровень дерева один - не подходит условию
+    }
+}
+```
+
+tree.h
+```src:tree.h
+#ifndef _TREE_H_
+#define _TREE_H_
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+typedef int TreeItem;
+typedef struct _tree *Tree;
+
+Tree tree_create(TreeItem value);
+void tree_add_node(Tree tree, TreeItem parent, TreeItem value);
+void tree_print(Tree tree);
+void tree_print_node(Tree tree, int indent);
+void tree_destroy(Tree tree);
+void tree_del_node(Tree tree, TreeItem value);
+Tree tree_find(Tree tree, TreeItem c);
+
+int max_level(Tree tree, int deep);
+void counting_nodes_on_the_lvls(Tree tree, int level, int *mat);
+void check_monotonicity_of_decreaset(Tree tree);
+
+#endif // _TREE_H_
+```
+
+
 
 Пункты 1-7 отчета составляются сторого до начала лабораторной работы.
 Допущен к выполнению работы.
