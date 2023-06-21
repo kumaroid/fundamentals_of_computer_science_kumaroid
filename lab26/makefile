@@ -2,7 +2,7 @@ CC=gcc
 LD=gcc
 CCFLAGS=-Wall -Werror -Wextra -Wfatal-errors -Wpedantic -pedantic-errors
 LDFLAGS=
-SOURCES=$(main.c deque.c deque.h)
+SOURCES=$(addprefix lab26/,main.c deque.c deque.h)
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=src/main
 
