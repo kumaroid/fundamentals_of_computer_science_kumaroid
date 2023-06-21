@@ -54,26 +54,23 @@
 
 Makefile
 ```
-CC=gcc
-LD=gcc
-CCFLAGS=-Wall -Werror -Wextra -Wfatal-errors -Wpedantic -pedantic-errors
-LDFLAGS=
-SOURCES=$(addprefix src/,main.c deque.c deque.h)
-OBJECTS=$(SOURCES:.c=.o)
-EXECUTABLE=src/main
+CC = gcc
+CFLAGS = -Wall -Wextra -Wpedantic
+OBJS = main.o deque.o
 
-$(EXECUTABLE): $(OBJECTS)
-	$(LD) $(LDFLAGS) $(OBJECTS) -o $(EXECUTABLE)
-	mkdir build
-	mkdir build/bin
-	mv $(EXECUTABLE) build/bin
-	mv $(OBJECTS) build
+all: deque_merge_sort
 
-%.o: %.c
-	$(CC) $(CCFLAGS) -c $< -o $@
+deque_merge_sort: $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o deque_merge_sort
+
+main.o: main.c deque.h
+	$(CC) $(CFLAGS) -c main.c
+
+deque.o: deque.c deque.h
+	$(CC) $(CFLAGS) -c deque.c
 
 clean:
-	rm -r build
+	rm -f deque_merge_sort $(OBJS)
 
 ```
 
