@@ -280,6 +280,36 @@ aleksandr@aanedosekin:~/andrew$ ./deque_merge_sort
 7 3 12 -11 34 5 
 -11 3 5 7 12 34 
 aleksandr@aanedosekin:~/andrew$
+aleksandr@aanedosekin:~/andrew$ valgrind ./deque_merge_sort 
+==11745== Memcheck, a memory error detector
+==11745== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==11745== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==11745== Command: ./deque_merge_sort
+==11745== 
+==11745==ASan runtime does not come first in initial library list; you should either link runtime to your application or manually preload it with LD_PRELOAD.
+==11745== 
+==11745== Process terminating with default action of signal 11 (SIGSEGV)
+==11745==  General Protection Fault
+==11745==    at 0x52EFF42: __pthread_once_slow (pthread_once.c:114)
+==11745==    by 0x53BEA52: __rpc_thread_variables (rpc_thread.c:59)
+==11745==    by 0x5411D8C: free_mem (in /usr/lib/x86_64-linux-gnu/libc.so.6)
+==11745==    by 0x54118C1: __libc_freeres (in /usr/lib/x86_64-linux-gnu/libc.so.6)
+==11745==    by 0x483F1B2: _vgnU_freeres (in /usr/libexec/valgrind/vgpreload_core-amd64-linux.so)
+==11745==    by 0x4A553DF: ???
+==11745==    by 0x494B2B6: __sanitizer::Die() (sanitizer_termination.cpp:59)
+==11745==    by 0x4921398: __asan::AsanCheckDynamicRTPrereqs() (asan_linux.cpp:181)
+==11745==    by 0x492D544: __asan::AsanInitInternal() [clone .part.0] (asan_rtl.cpp:420)
+==11745==    by 0x40065BD: _dl_init (dl-init.c:102)
+==11745==    by 0x40202E9: ??? (in /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2)
+==11745== 
+==11745== HEAP SUMMARY:
+==11745==     in use at exit: 0 bytes in 0 blocks
+==11745==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==11745== 
+==11745== All heap blocks were freed -- no leaks are possible
+==11745== 
+==11745== For lists of detected and suppressed errors, rerun with: -s
+==11745== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
 
 ## 9. Дневник отладки должен содержать дату и время сеансов отладки и основные события (ошибки в сценарии и программе, нестандартные ситуации) и краткие комментарии к ним. В дневнике отладки приводятся сведения об использовании других ЭВМ, существенном участии преподавателя и других лиц в написании и отладке программы.
