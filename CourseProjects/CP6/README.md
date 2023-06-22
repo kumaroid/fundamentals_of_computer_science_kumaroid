@@ -620,6 +620,7 @@ nsnfwzqfjm	12	x64	5	PCI	2	HDD	4	671	16	2	Windows
 
 ## 9. Замечания автора по существу работы
 
+<a href = 'https://codeforces.com/contest/1821/submission/202878112'>def(Zaschita)</a>
 
 
 ## 10.Вывод работы:
