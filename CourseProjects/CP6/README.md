@@ -615,7 +615,169 @@ nsnfwzqfjm	12	x64	5	PCI	2	HDD	4	671	16	2	Windows
 ## 8. Распечатка протокола
 
 ```
+generate
 
+valgrind --tool=memcheck ./gener test.bin 5
+==18760== Memcheck, a memory error detector
+==18760== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==18760== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==18760== Command: ./gener test.bin 5
+==18760== 
+==18760== 
+==18760== HEAP SUMMARY:
+==18760==     in use at exit: 0 bytes in 0 blocks
+==18760==   total heap usage: 11 allocs, 11 frees, 23,312 bytes allocated
+==18760== 
+==18760== All heap blocks were freed -- no leaks are possible
+==18760== 
+==18760== For lists of detected and suppressed errors, rerun with: -s
+==18760== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+```
+
+convert
+```
+valgrind --tool=memcheck ./conv test.bin test.txt btt
+==18834== Memcheck, a memory error detector
+==18834== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==18834== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==18834== Command: ./conv test.bin test.txt btt
+==18834== 
+==18834== Conditional jump or move depends on uninitialised value(s)
+==18834==    at 0x484ED28: strlen (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18834==    by 0x48E3DB0: __vfprintf_internal (vfprintf-internal.c:1517)
+==18834==    by 0x48CD749: fprintf (fprintf.c:32)
+==18834==    by 0x10A2F5: studentWriteTxt (serialization.c:26)
+==18834==    by 0x10A063: main (converter.c:32)
+==18834== 
+==18834== Conditional jump or move depends on uninitialised value(s)
+==18834==    at 0x484ED28: strlen (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18834==    by 0x48E3DB0: __vfprintf_internal (vfprintf-internal.c:1517)
+==18834==    by 0x48CD749: fprintf (fprintf.c:32)
+==18834==    by 0x10A33A: studentWriteTxt (serialization.c:28)
+==18834==    by 0x10A063: main (converter.c:32)
+==18834== 
+==18834== Conditional jump or move depends on uninitialised value(s)
+==18834==    at 0x484ED28: strlen (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18834==    by 0x48E3DB0: __vfprintf_internal (vfprintf-internal.c:1517)
+==18834==    by 0x48CD749: fprintf (fprintf.c:32)
+==18834==    by 0x10A37F: studentWriteTxt (serialization.c:30)
+==18834==    by 0x10A063: main (converter.c:32)
+==18834== 
+==18834== Conditional jump or move depends on uninitialised value(s)
+==18834==    at 0x484ED28: strlen (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18834==    by 0x48E3DB0: __vfprintf_internal (vfprintf-internal.c:1517)
+==18834==    by 0x48CD749: fprintf (fprintf.c:32)
+==18834==    by 0x10A3CA: studentWriteTxt (serialization.c:32)
+==18834==    by 0x10A063: main (converter.c:32)
+==18834== 
+==18834== Conditional jump or move depends on uninitialised value(s)
+==18834==    at 0x484ED28: strlen (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18834==    by 0x48E3DB0: __vfprintf_internal (vfprintf-internal.c:1517)
+==18834==    by 0x48CD749: fprintf (fprintf.c:32)
+==18834==    by 0x10A484: studentWriteTxt (serialization.c:37)
+==18834==    by 0x10A063: main (converter.c:32)
+==18834== 
+==18834== Conditional jump or move depends on uninitialised value(s)
+==18834==    at 0x48ECBCC: fread (iofread.c:35)
+==18834==    by 0x10A6E1: readStrBin (serialization.c:66)
+==18834==    by 0x10A71F: studentReadBin (serialization.c:70)
+==18834==    by 0x10A095: main (converter.c:31)
+==18834== 
+==18834== Conditional jump or move depends on uninitialised value(s)
+==18834==    at 0x48ECBCC: fread (iofread.c:35)
+==18834==    by 0x10A6E1: readStrBin (serialization.c:66)
+==18834==    by 0x10A754: studentReadBin (serialization.c:72)
+==18834==    by 0x10A095: main (converter.c:31)
+==18834== 
+==18834== Conditional jump or move depends on uninitialised value(s)
+==18834==    at 0x48ECBCC: fread (iofread.c:35)
+==18834==    by 0x10A6E1: readStrBin (serialization.c:66)
+==18834==    by 0x10A789: studentReadBin (serialization.c:74)
+==18834==    by 0x10A095: main (converter.c:31)
+==18834== 
+==18834== Conditional jump or move depends on uninitialised value(s)
+==18834==    at 0x48ECBCC: fread (iofread.c:35)
+==18834==    by 0x10A6E1: readStrBin (serialization.c:66)
+==18834==    by 0x10A7C4: studentReadBin (serialization.c:76)
+==18834==    by 0x10A095: main (converter.c:31)
+==18834== 
+==18834== Conditional jump or move depends on uninitialised value(s)
+==18834==    at 0x48ECBCC: fread (iofread.c:35)
+==18834==    by 0x10A6E1: readStrBin (serialization.c:66)
+==18834==    by 0x10A862: studentReadBin (serialization.c:81)
+==18834==    by 0x10A095: main (converter.c:31)
+==18834== 
+==18834== 
+==18834== HEAP SUMMARY:
+==18834==     in use at exit: 0 bytes in 0 blocks
+==18834==   total heap usage: 4 allocs, 4 frees, 9,136 bytes allocated
+==18834== 
+==18834== All heap blocks were freed -- no leaks are possible
+==18834==
+==18834== Use --track-origins=yes to see where uninitialised values come from
+==18834== For lists of detected and suppressed errors, rerun with: -s
+==18834== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+```
+
+main
+```
+valgrind ./main test.bin
+
+
+ help      for call helpboard
+ create      for create a new dataset
+ addstud      for adding new record
+ print      for printing dataset
+ delf      for delering dataset
+ func      for make a task sample
+ delstud      for delete student info in file
+Enter command -> print
+Surname    PNum  PType  RAM  CType  VMem  DType  DNum  DCap  ICNum  PDNum  OS
+bbmqbhcdar  9  x64  51  AGP  2  HDD  2  212  313  Windows
+scdxrjmowf  11  x86  3  PCI  2  HDD  3  474  11  5  Ubuntu
+sarcbynecd  8  x64  34  PCI  2  SSD  3  417  216  Windows
+llnmpapqfw  4  x64  53  AGP  2  HDD  3  184  810  Ubuntu
+wnkuewhsqm  7  x86  58  AGP  3  HDD  3  810  15  4  Windows
+
+Enter command -> func
+Enter a numbers of student:
+3
+Enter minimal number of processors
+2
+Enter minimal size of RAM, GB
+30
+Enter minimal size of video memory, GB
+2
+Enter minimal number of disks
+1
+Enter minimal capacity of disk, GB
+1
+Enter minimal number of integrated controllers
+1
+Enter necessary OS
+Windows
+List of students whose computers need to be upgraded:
+  scdxrjmowf
+  llnmpapqfw
+
+Enter command ->
+
+HEAP SUMMARY:
+==18939==     in use at exit: 2,520 bytes in 3 blocks
+==18939==   total heap usage: 9 allocs, 9 frees, 16,224 bytes allocated
+==18939== 
+==18939== LEAK SUMMARY:
+==18939==    definitely lost: 0 bytes in 0 blocks
+==18939==    indirectly lost: 0 bytes in 0 blocks
+==18939==      possibly lost: 0 bytes in 0 blocks
+==18939==    still reachable: 2,520 bytes in 3 blocks
+==18939==         suppressed: 0 bytes in 0 blocks
+==18939== Rerun with --leak-check=full to see details of leaked memory
+==18939== 
+==18939== Use --track-origins=yes to see where uninitialised values come from
+==18939== For lists of detected and suppressed errors, rerun with: -s
+==18939== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
 
 ## 9. Замечания автора по существу работы
