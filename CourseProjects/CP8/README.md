@@ -381,7 +381,64 @@ void listFoundElementDelete(List* list, color foundElement) {
 ## 8. Распечатка протокола
 
 ```
+valgrind ./main
+==20400== Memcheck, a memory error detector
+==20400== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==20400== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==20400== Command: ./main
+==20400== 
+  HELP BOARD
 
+  Command programms:
+exit   Exit to porgramm
+help   Call help board
+pushf   Push front element
+insind   Insert element by index
+popind   Pop element by index
+print   Print all elements in list
+dellist   Delete all element in list
+vartask   Searches for the entered element in the list, if the element is found - deletes the list
+   ENUM COLORS:
+Red
+Green
+Blue
+Yellow
+Black
+
+
+Enter command: pushf 8
+Eneter a color to need push front: This color is not in the enum list. Please enter a valid color.
+
+Enter command: push Red
+Unknown command
+
+Enter command: Unknown command
+
+Enter command: pushf Red
+Eneter a color to need push front: 
+Enter command: pushf Green
+Eneter a color to need push front: 
+Enter command: pushf Blue
+Eneter a color to need push front: 
+Enter command: pushf Yellow
+Eneter a color to need push front: 
+Enter command: pushf Black
+Eneter a color to need push front: 
+Enter command: vartask
+Enter the color to be found: print
+This color is not in the enum list. Please enter a valid color.
+  Element was not finded!
+
+Enter command: exit
+==20400== 
+==20400== HEAP SUMMARY:
+==20400==     in use at exit: 0 bytes in 0 blocks
+==20400==   total heap usage: 7 allocs, 7 frees, 2,128 bytes allocated
+==20400== 
+==20400== All heap blocks were freed -- no leaks are possible
+==20400== 
+==20400== For lists of detected and suppressed errors, rerun with: -s
+==20400== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
 
 ## 9. Дневник отладки должен содержать дату и время сеансов отладки и основные события (ошибки в сценарии и программе, нестандартные ситуации) и краткие комментарии к ним. В дневнике отладки приводятся сведения об использовании других ЭВМ, существенном участии преподавателя и других лиц в написании и отладке программы.
