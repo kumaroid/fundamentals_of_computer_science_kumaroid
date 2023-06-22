@@ -1,0 +1,7 @@
+bbmqbhcdar	9	x64	51	AGP	2	HDD	2	212	3	13	Windows	
+scdxrjmowf	11	x86	3	PCI	2	HDD	3	474	11	5	Ubuntu	
+sarcbynecd	8	x64	34	PCI	2	SSD	3	417	2	16	Windows	
+llnmpapqfw	4	x64	53	AGP	2	HDD	3	184	8	10	Ubuntu	
+wnkuewhsqm	7	x86	58	AGP	3	HDD	3	810	15	4	Windows	
+swmdkqtbxi	11	x64	42	PCI	3	SSD	2	277	14	13	Windows	
+nsnfwzqfjm	12	x64	5	PCI	2	HDD	4	671	16	2	Windows	
