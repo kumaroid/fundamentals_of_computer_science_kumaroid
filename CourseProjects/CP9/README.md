@@ -510,7 +510,76 @@ poem_reverse.txt
 ## 8. Распечатка протокола
 
 ```
+valgrind ./main key.txt poem.txt
+==20743== Memcheck, a memory error detector
+==20743== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==20743== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==20743== Command: ./main key.txt poem.txt
+==20743== 
+The original table looks like this:
+|--------------------------------------------|
+|   KEY   | STRING                            
+|--------------------------------------------|
+   aaaaa | Я вас любил: любовь еще, быть может,
+   aaaaa | В душе моей угасла не совсем;
+   aaaab | Но пусть она вас больше не тревожит;
+   aaaab | Я не хочу печалить вас ничем.
+   aaaac | Я вас любил безмолвно, безнадежно,
+   aaaac | То робостью, то ревностью томим;
+   aaaad | Я вас любил так искренно, так нежно,
+|  aaaad | Как дай вам бог любимой быть другим. 
+|--------------------------------------------|
+  CHOOSE THE COMMAND TO USE PROGRAMM
+exit  exit from the program
+help  call helpboard
+sort  string merge sort
+findstr  find string by key
+print  print a table with a poem
+rewrtf  rewrite a file
 
+Enter command: findstr aaaaa
+Enter key:
+   aaaaa | В душе моей угасла не совсем;
+
+Enter command: print
+|--------------------------------------------|
+|   KEY   | STRING                            
+|--------------------------------------------|
+   aaaaa | Я вас любил: любовь еще, быть может,
+   aaaaa | В душе моей угасла не совсем;
+   aaaab | Но пусть она вас больше не тревожит;
+   aaaab | Я не хочу печалить вас ничем.
+   aaaac | Я вас любил безмолвно, безнадежно,
+   aaaac | То робостью, то ревностью томим;
+   aaaad | Я вас любил так искренно, так нежно,
+|  aaaad | Как дай вам бог любимой быть другим. 
+|--------------------------------------------|
+
+Enter command: sort
+Table as sorted:
+|--------------------------------------------|
+|   KEY   | STRING                            
+|--------------------------------------------|
+   aaaaa | Я вас любил: любовь еще, быть может,
+   aaaaa | В душе моей угасла не совсем;
+   aaaab | Но пусть она вас больше не тревожит;
+   aaaab | Я не хочу печалить вас ничем.
+   aaaac | Я вас любил безмолвно, безнадежно,
+   aaaac | То робостью, то ревностью томим;
+   aaaad | Я вас любил так искренно, так нежно,
+|  aaaad | Как дай вам бог любимой быть другим. 
+|--------------------------------------------|
+
+Enter command: exit
+==20743== 
+==20743== HEAP SUMMARY:
+==20743==     in use at exit: 0 bytes in 0 blocks
+==20743==   total heap usage: 17 allocs, 17 frees, 15,864 bytes allocated
+==20743== 
+==20743== All heap blocks were freed -- no leaks are possible
+==20743== 
+==20743== For lists of detected and suppressed errors, rerun with: -s
+==20743== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
 
 ## 9. Замечания автора по существу работы
