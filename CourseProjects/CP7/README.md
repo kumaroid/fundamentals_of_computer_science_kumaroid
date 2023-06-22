@@ -474,7 +474,30 @@ out.txt
 ## 8. Распечатка протокола
 
 ```
-
+valgrind ./main in.txt
+==20185== Memcheck, a memory error detector
+==20185== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==20185== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==20185== Command: ./main in.txt
+==20185== 
+Vector A = (0;1.0;-1) (0;7.0;-1) (3;-9.0;-1) 
+Vector M = ( -1 0 -1 1 2 )
+==20185== 
+==20185== HEAP SUMMARY:
+==20185==     in use at exit: 0 bytes in 0 blocks
+==20185==   total heap usage: 17 allocs, 17 frees, 14,956 bytes allocated
+==20185== 
+==20185== All heap blocks were freed -- no leaks are possible
+==20185== 
+==20185== Use --track-origins=yes to see where uninitialised values come from
+==20185== For lists of detected and suppressed errors, rerun with: -s
+==20185== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+aleksandr@aanedosekin:~/andrew/KP7$ cat out.txt 
+0.0 0.0 0.0 0.0 
+0.1 0.0 0.0 0.0 
+0.0 0.0 0.0 0.0 
+0.8 0.0 0.0 0.0 
+0.0 0.0 0.0 -1.0
 ```
 
 ## 9. Дневник отладки должен содержать дату и время сеансов отладки и основные события (ошибки в сценарии и программе, нестандартные ситуации) и краткие комментарии к ним. В дневнике отладки приводятся сведения об использовании других ЭВМ, существенном участии преподавателя и других лиц в написании и отладке программы.
