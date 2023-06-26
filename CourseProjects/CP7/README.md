@@ -508,7 +508,7 @@ aleksandr@aanedosekin:~/andrew/KP7$ cat out.txt
 
 ## 10. Замечания автора по существу работы
 
-Защита:
+[Zaschita](https://codeforces.com/contest/1842/submission/211138688)
 
 
 
